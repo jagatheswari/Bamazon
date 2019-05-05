@@ -1,0 +1,2 @@
+# Bamazon
+Similar to Amazon
