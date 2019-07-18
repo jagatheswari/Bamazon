@@ -43,7 +43,7 @@ function placeOrder() {
   ])
   .then(({id,quantity})=> {
       console.log(id)
-      console.log(quantity)
+      console.log(`Quantity is : ${quantity}`)
       checkStock(id,quantity)
     })
   .catch(e => console.log(e))  
@@ -53,28 +53,38 @@ let checkStock = (id, quantity) => {
   db.query(`SELECT * FROM products1 WHERE id = ${id}`, (e, 
       [{productname, price, stockquantity}])=> {
           if(e) throw e
-          if(stockquantity => quantity) {
-              console.log(`${stockquantity}`)
+          if(quantity <= stockquantity) {
+              console.log(`Stock Quantity is ${stockquantity}`)
               console.log(`
                   Order List!!
                   Quantity: ${quantity}
                   Product Name: ${productname}
                   TOTAL COST: ${price * quantity}
               `)
+              
+          }
+          else if (quantity > stockquantity) {
+            //make the customer choose again 
+            console.log(`
+            Insufficient Quantity please choose another amount! 
+        `)
+        placeOrder()
+      
           }
       })
 }
 // creating a function to update the quantity in db
-let quantityAvailability = (id,stockquantity) => {
-  db.query('UPDATE products1 SET ? WHERE stockquantity = ?'), (e,
-    [{id,quantity}]) => {
-      if(e) throw e
-      if(quantity > stockquantity) {
-        console.log('Insufficient Items!!')
-      }
+// let quantityAvailability = (id, stockquantity) => {
+//   db.query('UPDATE products1 SET ? WHERE stockquantity = ?'), (e,
+//     [{id,quantity}]) => {
+//       if(e) throw e
+//       if(quantity > stockquantity) {
+//         console.log('Insufficient Items!!')
+//       }
 
-    }
-}
+//     }
+// }
 
+//Function that checks logic to see if enough stock 
 
 
